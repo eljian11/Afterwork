@@ -45,16 +45,18 @@ namespace Project.Scripts.Room.Reworked
 
         private void Update()
         {
-            if (!this.isPlacing) return;
+            if (!this.isPlacing)
+            {
+                return;
+            }
 
-            // Rotate item with 'R'
             if (Input.GetKeyDown(KeyCode.R))
             {
                 this.placementHandler.RotateItem();
             }
 
-            // Raycast to floor
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, this.floorLayer))
             {
                 Vector2Int originCell = this.gridManager.GridPlacementSystem.WorldToGridPosition(hit.point);
@@ -65,14 +67,12 @@ namespace Project.Scripts.Room.Reworked
 
                 this.placementHandler.UpdateGhostPositionAndColor(snapPosition, canPlace);
 
-                // Confirm on Left Click
                 if (Input.GetMouseButtonDown(0) && canPlace)
                 {
                     ConfirmPlacement(originCell, currentSize);
                 }
             }
 
-            // Cancel on Right Click
             if (Input.GetMouseButtonDown(1))
             {
                 CancelPlacement();

@@ -1,6 +1,9 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+//gridmanger job: 
+//creates the tiles -> grids
+//checks if tiles are available 
 
 namespace Project.Scripts.Room.Reworked
 {
@@ -8,13 +11,22 @@ namespace Project.Scripts.Room.Reworked
     {
         [SerializeField] private MeshFilter _meshFilter;
         
-        private readonly IGridPlacementSystem _gridPlacementSystem = new GridPlacementSystem(); // needs provider
-        private readonly IGridVisualizer _gridVisualizer = new GridVisualizer(); 
+        private IGridPlacementSystem _gridPlacementSystem = new EmptyGridPlacementSystem(); // needs provider
+        private IGridVisualizer _gridVisualizer = new EmptyGridVisualizer();  // maybe needs provider too?
         
-        private void Awake()
+        private IGridCreation _gridCreation = new EmptyGridCreation();
+        
+        public IGridPlacementSystem GridPlacementSystem => this._gridPlacementSystem;
+        public IGridVisualizer GridVisualizer => this._gridVisualizer; 
+        
+        private void Awake() // still needs to be cleaned
         {
             Vector2Int gridSie = new Vector2Int(10, 10);
             float tileSize = 1f; // all tiles are 1x1
+
+            this._gridPlacementSystem = new GridPlacementSystem();
+            this._gridCreation = new GridCreation(gridSie);
+            this._gridVisualizer = new GridVisualizer();
             
             var grids  = CreateGrid(gridSie);
             
@@ -24,22 +36,8 @@ namespace Project.Scripts.Room.Reworked
         
         private Dictionary<Vector2Int, CellData> CreateGrid(Vector2Int gridSize)
         {
-            Dictionary<Vector2Int, CellData> grid = new();
-            
-            for (int x = 0; x < gridSize.x; x++)
-            {
-                for (int z = 0; z < gridSize.y; z++)
-                {
-                    grid.Add(new Vector2Int(x, z), new CellData());
-                }
-            }
-            
-            return grid;
+            return this._gridCreation.CreateGrid();
         }
-        
-        public IGridPlacementSystem GridPlacementSystem => this._gridPlacementSystem; 
-        
-        public IGridVisualizer GridVisualizer => this._gridVisualizer; 
 
         public void IsEditMode(bool isEditMode)
         {
