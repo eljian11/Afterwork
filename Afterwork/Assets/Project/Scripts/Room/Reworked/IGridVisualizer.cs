@@ -7,5 +7,6 @@ namespace Project.Scripts.Room.Reworked
     {
         void Initialize(Dictionary<Vector2Int, CellData> grid, float tileSize, MeshFilter meshFilter);
         void SetVisibility(bool isVisible);
+        void UpdateGrid();
     }
 }

@@ -6,11 +6,11 @@ namespace Project.Scripts.Room.Reworked
     public sealed class GridPlacementSystem : IGridPlacementSystem 
     {
         private float _tileSize = 1f;
-        private Dictionary<Vector2Int, CellData> grid = new();
+        private Dictionary<Vector2Int, CellData> _grid = new();
 
         public void Initialize(Dictionary<Vector2Int, CellData> grid, float tileSize)
         {
-            this.grid = grid;
+            this._grid = grid;
             this._tileSize = tileSize;
         }
 
@@ -22,6 +22,14 @@ namespace Project.Scripts.Room.Reworked
             return new Vector2Int(x, z);
         }
         
+        public Vector3 CellToWorldPosition(Vector2Int cellPos)
+        {
+            float x = cellPos.x * this._tileSize;
+            float z = cellPos.y * this._tileSize;
+    
+            return new Vector3(x, 0f, z);
+        }
+        
         public bool IsAreaAvailable(Vector2Int originCell, Vector2Int size)
         {
             for (int x = 0; x < size.x; x++)
@@ -30,7 +38,7 @@ namespace Project.Scripts.Room.Reworked
                 {
                     Vector2Int targetCell = new Vector2Int(originCell.x + x, originCell.y + z);
                 
-                    if (IsCellFree(targetCell) == false) 
+                    if (!IsCellWithinBounds(targetCell) || !IsCellFree(targetCell)) 
                     {
                         return false; 
                     }
@@ -41,11 +49,30 @@ namespace Project.Scripts.Room.Reworked
     
         private bool IsCellFree(Vector2Int cellPos)
         {
-            if (this.grid.TryGetValue(cellPos, out var cell))
+            if (this._grid.TryGetValue(cellPos, out var cell))
             {
                 return !cell.IsOccupied;
             }
-            return true;
+            return false;
+        }
+
+        private bool IsCellWithinBounds(Vector2Int cellPos)
+        {
+            return this._grid.ContainsKey(cellPos);
+        }
+
+        public void OccupyCell(Vector2Int cell, GameObject objectToOccupy)
+        {
+            if (this._grid.TryGetValue(cell, out var cellData))
+            {
+                cellData.IsOccupied = true;
+                cellData.OccupyingObject = objectToOccupy;
+            }
+        }
+
+        public void UpdateGrid()
+        {
+            // Handle any dynamic grid updates if necessary
         }
     }
 }

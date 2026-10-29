@@ -7,6 +7,7 @@ namespace Project.Scripts.Room.Reworked
     {
         private MeshFilter _meshFilter;
         private Mesh _gridMesh;
+        private Dictionary<Vector2Int, CellData> _currentGrid;
         
         public void Initialize(Dictionary<Vector2Int, CellData> grid, float tileSize, MeshFilter meshFilter)
         {
@@ -15,6 +16,8 @@ namespace Project.Scripts.Room.Reworked
             this._gridMesh = new Mesh();
             this._gridMesh.name = "GeneratedGridOverlayMesh";
             this._meshFilter.mesh = this._gridMesh;
+            
+            this._currentGrid = grid;
             
             GenerateGridMesh(grid, tileSize);
         }
@@ -75,6 +78,11 @@ namespace Project.Scripts.Room.Reworked
         public void SetVisibility(bool isVisible)
         {
             this._meshFilter.gameObject.SetActive(isVisible);
+        }
+
+        public void UpdateGrid()
+        {
+            GenerateGridMesh(this._currentGrid, 1f);
         }
     }
 }

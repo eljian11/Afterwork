@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,20 +8,20 @@ namespace Project.Scripts.Room.Reworked
     {
         [SerializeField] private MeshFilter _meshFilter;
         
-        private readonly IGridPlacementSystem _gridPlacementSystem = new GridPlacementSystem();
-        private readonly IGridVisualizer _gridVisualizer = new GridVisualizer();
+        private readonly IGridPlacementSystem _gridPlacementSystem = new GridPlacementSystem(); // needs provider
+        private readonly IGridVisualizer _gridVisualizer = new GridVisualizer(); 
         
         private void Awake()
         {
             Vector2Int gridSie = new Vector2Int(10, 10);
-            float tileSize = 1f;
+            float tileSize = 1f; // all tiles are 1x1
             
             var grids  = CreateGrid(gridSie);
             
             this._gridPlacementSystem.Initialize(grids, tileSize);
             this._gridVisualizer.Initialize(grids, tileSize, this._meshFilter);
         }
-
+        
         private Dictionary<Vector2Int, CellData> CreateGrid(Vector2Int gridSize)
         {
             Dictionary<Vector2Int, CellData> grid = new();
@@ -35,6 +36,10 @@ namespace Project.Scripts.Room.Reworked
             
             return grid;
         }
+        
+        public IGridPlacementSystem GridPlacementSystem => this._gridPlacementSystem; 
+        
+        public IGridVisualizer GridVisualizer => this._gridVisualizer; 
 
         public void IsEditMode(bool isEditMode)
         {

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Project.Scripts.Room.Reworked
@@ -7,39 +6,41 @@ namespace Project.Scripts.Room.Reworked
     [Serializable]
     public class ItemPlacementGhost 
     {
-        private Dictionary<Vector2Int, CellData> _grid;
+        private Renderer[] _ghostRenderers;
 
-        [SerializeField] private Material[] _ghostMaterials;
-        [SerializeField] private Color _validColor = new Color(0.7f, 1f, 0.7f, 0.4f);   // Soft light green
-        [SerializeField] private Color _invalidColor = new Color(1f, 0.6f, 0.6f, 0.4f); // Soft light red
+        [SerializeField] private Color _validColor = new Color(0.7f, 1f, 0.7f, 0.4f);   
+        [SerializeField] private Color _invalidColor = new Color(1f, 0.6f, 0.6f, 0.4f); 
         
-        public void Initialize(Dictionary<Vector2Int, CellData> grid)
+        public void Initialize(GameObject ghostPrefabInstance)
         {
-            _grid = grid;
-
-            foreach (CellData cellData in _grid.Values)
+            if (ghostPrefabInstance != null)
             {
-                UpdateGhostState(cellData.IsOccupied);
+                this._ghostRenderers = ghostPrefabInstance.GetComponentsInChildren<Renderer>();
             }
         }
 
         public void UpdateGhostState(bool isLegalPlacement)
         {
-            Color targetColor = isLegalPlacement ? _validColor : _invalidColor;
+            Color targetColor = isLegalPlacement ? this._validColor : this._invalidColor;
 
-            if (_ghostMaterials == null) return;
+            if (this._ghostRenderers == null) return;
 
-            foreach (var mat in _ghostMaterials)
+            foreach (var rend in this._ghostRenderers)
             {
-                if (mat == null) continue;
-                
-                if (mat.HasProperty("_Color"))
+                if (rend == null) continue;
+
+                foreach (var mat in rend.materials)
                 {
-                    mat.color = targetColor;
-                }
-                else if (mat.HasProperty("_BaseColor")) // For URP shaders
-                {
-                    mat.SetColor("_BaseColor", targetColor);
+                    if (mat == null) continue;
+                    
+                    if (mat.HasProperty("_Color"))
+                    {
+                        mat.color = targetColor;
+                    }
+                    else if (mat.HasProperty("_BaseColor")) 
+                    {
+                        mat.SetColor("_BaseColor", targetColor);
+                    }
                 }
             }
         }
