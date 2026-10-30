@@ -23,7 +23,10 @@ namespace Project.Scripts.Room.Reworked
         {
             Color targetColor = isLegalPlacement ? this._validColor : this._invalidColor;
 
-            if (this._ghostRenderers == null) return;
+            if (this._ghostRenderers == null)
+            {
+                return;
+            }
 
             foreach (var rend in this._ghostRenderers)
             {
