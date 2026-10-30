@@ -13,13 +13,11 @@ namespace Project.Scripts.Room.Reworked
         
         private IGridPlacementSystem _gridPlacementSystem = new EmptyGridPlacementSystem(); // needs provider
         private IGridVisualizer _gridVisualizer = new EmptyGridVisualizer();  // maybe needs provider too?
-        
         private IGridCreation _gridCreation = new EmptyGridCreation();
-        
         public IGridPlacementSystem GridPlacementSystem => this._gridPlacementSystem;
         public IGridVisualizer GridVisualizer => this._gridVisualizer; 
         
-        private void Awake() // still needs to be cleaned
+        private void Awake() // still needs to be cleaned, needs in bootscene
         {
             Vector2Int gridSie = new Vector2Int(10, 10);
             float tileSize = 1f; // all tiles are 1x1

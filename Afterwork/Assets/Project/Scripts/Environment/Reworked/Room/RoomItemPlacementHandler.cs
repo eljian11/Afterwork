@@ -1,27 +1,26 @@
-using System;
 using UnityEngine;
 
 namespace Project.Scripts.Room.Reworked
 {
-    public sealed class ItemPlacementHandler : MonoBehaviour
+    public sealed class RoomItemPlacementHandler : MonoBehaviour
     {
         [SerializeField] private ItemPlacementGhost _ghost = new();
         
-        private ItemData _currentItemData;
+        private RoomItemData _currentRoomItemData;
         private int _rotationStep = 0;
         private GameObject _activeItem;
 
-        public void Initialize(ItemData data)
+        public void Initialize(RoomItemData data)
         {
-            this._currentItemData = data;
+            this._currentRoomItemData = data;
             this._rotationStep = 0;
             this.transform.rotation = Quaternion.identity;
 
             CleanupGhost();
 
-            if (this._currentItemData != null && this._currentItemData.prefab != null)
+            if (this._currentRoomItemData != null && this._currentRoomItemData.prefab != null)
             {
-                this._activeItem = Instantiate(this._currentItemData.prefab, this.transform);
+                this._activeItem = Instantiate(this._currentRoomItemData.prefab, this.transform);
                 this._activeItem.transform.localPosition = Vector3.zero;
                 this._activeItem.transform.localRotation = Quaternion.identity;
                 
@@ -31,17 +30,17 @@ namespace Project.Scripts.Room.Reworked
 
         public Vector2Int GetCurrentSize()
         {
-            if (this._currentItemData == null)
+            if (this._currentRoomItemData == null)
             {
                 return new Vector2Int(1, 1);
             }
 
             if (this._rotationStep % 2 == 1)
             {
-                return new Vector2Int(this._currentItemData.size.y, this._currentItemData.size.x);
+                return new Vector2Int(this._currentRoomItemData.size.y, this._currentRoomItemData.size.x);
             }
             
-            return this._currentItemData.size;
+            return this._currentRoomItemData.size;
         }
 
         public void RotateItem()

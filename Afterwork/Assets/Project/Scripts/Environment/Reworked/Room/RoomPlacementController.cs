@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Project.Scripts.Room.Reworked
@@ -7,21 +8,22 @@ namespace Project.Scripts.Room.Reworked
     {
         [Header("References")]
         [SerializeField] private GridManager gridManager;
-        [SerializeField] private ItemPlacementHandler placementHandler; 
+        [SerializeField] private RoomItemPlacementHandler placementHandler; 
         [SerializeField] private LayerMask floorLayer;
 
-        private ItemData activeItemData;
+        private RoomItemData _activeRoomItemData;
         private bool isPlacing = false;
         
+        [FormerlySerializedAs("_testItemData")]
         [Header("Testing UI")]
-        [SerializeField] private ItemData _testItemData;
+        [SerializeField] private RoomItemData testRoomItemData;
         [SerializeField] private Button _beginPlacementButton;
         
         private void OnEnable()
         {
             if (this._beginPlacementButton != null)
             {
-                this._beginPlacementButton.onClick.AddListener(() => this.BeginPlacement(this._testItemData));
+                this._beginPlacementButton.onClick.AddListener(() => this.BeginPlacement(this.testRoomItemData));
             }
         }
         
@@ -29,18 +31,18 @@ namespace Project.Scripts.Room.Reworked
         {
             if (this._beginPlacementButton != null)
             {
-                this._beginPlacementButton.onClick.RemoveListener(() => this.BeginPlacement(this._testItemData));
+                this._beginPlacementButton.onClick.RemoveListener(() => this.BeginPlacement(this.testRoomItemData));
             }
         }
 
-        public void BeginPlacement(ItemData itemData)
+        public void BeginPlacement(RoomItemData roomItemData)
         {
-            if (itemData == null) return;
+            if (roomItemData == null) return;
 
-            this.activeItemData = itemData;
+            this._activeRoomItemData = roomItemData;
             this.isPlacing = true;
             this.gridManager.IsEditMode(true);
-            this.placementHandler.Initialize(itemData);
+            this.placementHandler.Initialize(roomItemData);
         }
 
         private void Update()
@@ -82,7 +84,7 @@ namespace Project.Scripts.Room.Reworked
         private void ConfirmPlacement(Vector2Int originCell, Vector2Int size)
         {
             Vector3 spawnPosition = this.gridManager.GridPlacementSystem.CellToWorldPosition(originCell);
-            GameObject permanentFurniture = Instantiate(this.activeItemData.prefab, spawnPosition, this.placementHandler.transform.rotation);
+            GameObject permanentFurniture = Instantiate(this._activeRoomItemData.prefab, spawnPosition, this.placementHandler.transform.rotation);
 
             for (int x = 0; x < size.x; x++)
             {
