@@ -5,7 +5,7 @@ namespace Project.Scripts.Room.Reworked
     public sealed class RoomItemPlacementHandler : MonoBehaviour
     {
         [SerializeField] private ItemPlacementGhost _ghost = new();
-        
+
         private RoomItemData _currentRoomItemData;
         private int _rotationStep = 0;
         private GameObject _activeItem;
@@ -23,23 +23,18 @@ namespace Project.Scripts.Room.Reworked
                 this._activeItem = Instantiate(this._currentRoomItemData.prefab, this.transform);
                 this._activeItem.transform.localPosition = Vector3.zero;
                 this._activeItem.transform.localRotation = Quaternion.identity;
-                
+
                 this._ghost.Initialize(this._activeItem);
             }
         }
 
         public Vector2Int GetCurrentSize()
         {
-            if (this._currentRoomItemData == null)
-            {
-                return new Vector2Int(1, 1);
-            }
+            if (this._currentRoomItemData == null) return new Vector2Int(1, 1);
 
             if (this._rotationStep % 2 == 1)
-            {
                 return new Vector2Int(this._currentRoomItemData.size.y, this._currentRoomItemData.size.x);
-            }
-            
+
             return this._currentRoomItemData.size;
         }
 

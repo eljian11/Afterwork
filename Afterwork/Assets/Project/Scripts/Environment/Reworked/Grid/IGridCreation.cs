@@ -28,14 +28,10 @@ namespace Project.Scripts.Room.Reworked
         public Dictionary<Vector2Int, CellData> CreateGrid()
         {
             Dictionary<Vector2Int, CellData> grid = new();
-            
-            for (int x = 0; x < this._gridSize.x; x++)
-            {
-                for (int z = 0; z < this._gridSize.y; z++)
-                {
-                    grid.Add(new Vector2Int(x, z), new CellData());
-                }
-            }
+
+            for (var x = 0; x < this._gridSize.x; x++)
+            for (var z = 0; z < this._gridSize.y; z++)
+                grid.Add(new Vector2Int(x, z), new CellData());
 
             return grid;
         }

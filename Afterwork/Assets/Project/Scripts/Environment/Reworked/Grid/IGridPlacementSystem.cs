@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Project.Scripts.Room.Reworked
 {
-    public interface IGridPlacementSystem 
+    public interface IGridPlacementSystem
     {
         void Initialize(Dictionary<Vector2Int, CellData> grid, float tileSize);
         Vector2Int WorldToGridPosition(Vector3 worldPosition);
@@ -15,7 +15,9 @@ namespace Project.Scripts.Room.Reworked
 
     public sealed class EmptyGridPlacementSystem : IGridPlacementSystem
     {
-        public void Initialize(Dictionary<Vector2Int, CellData> grid, float tileSize) { }
+        public void Initialize(Dictionary<Vector2Int, CellData> grid, float tileSize)
+        {
+        }
 
         public Vector2Int WorldToGridPosition(Vector3 worldPosition)
         {
@@ -32,8 +34,12 @@ namespace Project.Scripts.Room.Reworked
             return false;
         }
 
-        public void OccupyCell(Vector2Int cell, GameObject objectToOccupy) { }
+        public void OccupyCell(Vector2Int cell, GameObject objectToOccupy)
+        {
+        }
 
-        public void UpdateGrid() { }
+        public void UpdateGrid()
+        {
+        }
     }
 }

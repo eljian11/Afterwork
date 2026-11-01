@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Project.Scripts.Room.Reworked
 {
-    public sealed class GridPlacementSystem : IGridPlacementSystem 
+    public sealed class GridPlacementSystem : IGridPlacementSystem
     {
         private float _tileSize = 1f;
         private Dictionary<Vector2Int, CellData> _grid = new();
@@ -16,43 +16,36 @@ namespace Project.Scripts.Room.Reworked
 
         public Vector2Int WorldToGridPosition(Vector3 worldPosition)
         {
-            int x = Mathf.FloorToInt(worldPosition.x / this._tileSize);
-            int z = Mathf.FloorToInt(worldPosition.z / this._tileSize);
-            
+            var x = Mathf.FloorToInt(worldPosition.x / this._tileSize);
+            var z = Mathf.FloorToInt(worldPosition.z / this._tileSize);
+
             return new Vector2Int(x, z);
         }
-        
+
         public Vector3 CellToWorldPosition(Vector2Int cellPos)
         {
-            float x = cellPos.x * this._tileSize;
-            float z = cellPos.y * this._tileSize;
-    
+            var x = cellPos.x * this._tileSize;
+            var z = cellPos.y * this._tileSize;
+
             return new Vector3(x, 0f, z);
         }
-        
+
         public bool IsAreaAvailable(Vector2Int originCell, Vector2Int size)
         {
-            for (int x = 0; x < size.x; x++)
+            for (var x = 0; x < size.x; x++)
+            for (var z = 0; z < size.y; z++)
             {
-                for (int z = 0; z < size.y; z++)
-                {
-                    Vector2Int targetCell = new Vector2Int(originCell.x + x, originCell.y + z);
-                
-                    if (!IsCellWithinBounds(targetCell) || !IsCellFree(targetCell)) 
-                    {
-                        return false; 
-                    }
-                }
+                var targetCell = new Vector2Int(originCell.x + x, originCell.y + z);
+
+                if (!IsCellWithinBounds(targetCell) || !IsCellFree(targetCell)) return false;
             }
+
             return true;
         }
-    
+
         private bool IsCellFree(Vector2Int cellPos)
         {
-            if (this._grid.TryGetValue(cellPos, out var cell))
-            {
-                return !cell.IsOccupied;
-            }
+            if (this._grid.TryGetValue(cellPos, out var cell)) return !cell.IsOccupied;
             return false;
         }
 
