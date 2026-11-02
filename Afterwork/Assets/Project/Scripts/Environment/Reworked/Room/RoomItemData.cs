@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Project.Scripts.Room.Reworked
+namespace Project.Scripts.Environment.Reworked.Room
 {
     [CreateAssetMenu(fileName = "NewItemData", menuName = "Room/Item Data")]
     public class RoomItemData : ScriptableObject

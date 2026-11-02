@@ -1,3 +1,4 @@
+using Project.Scripts.Environment.Reworked.Room;
 using UnityEngine;
 
 namespace Project.Scripts.Room.Reworked

@@ -1,0 +1,27 @@
+using System.Collections.Generic;
+using Project.Scripts.Room.Reworked;
+using UnityEngine;
+
+namespace Project.Scripts.Environment.Reworked.Grid
+{
+    public sealed class GridCreation : IGridCreation
+    {
+        private Vector2Int _gridSize;
+
+        public GridCreation(Vector2Int gridSize)
+        {
+            this._gridSize = gridSize;
+        }
+
+        public Dictionary<Vector2Int, CellData> CreateGrid()
+        {
+            Dictionary<Vector2Int, CellData> grid = new();
+
+            for (var x = 0; x < this._gridSize.x; x++)
+            for (var z = 0; z < this._gridSize.y; z++)
+                grid.Add(new Vector2Int(x, z), new CellData());
+
+            return grid;
+        }
+    }
+}

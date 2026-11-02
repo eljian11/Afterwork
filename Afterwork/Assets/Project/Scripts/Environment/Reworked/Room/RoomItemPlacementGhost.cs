@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Project.Scripts.Room.Reworked
+namespace Project.Scripts.Environment.Reworked.Room
 {
     [Serializable]
     public class ItemPlacementGhost

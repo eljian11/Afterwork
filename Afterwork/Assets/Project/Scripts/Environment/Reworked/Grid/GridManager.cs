@@ -1,9 +1,6 @@
 using System.Collections.Generic;
+using Project.Scripts.Environment.Reworked.Grid;
 using UnityEngine;
-
-//gridmanger job: 
-//creates the tiles -> grids
-//checks if tiles are available 
 
 namespace Project.Scripts.Room.Reworked
 {
@@ -11,8 +8,8 @@ namespace Project.Scripts.Room.Reworked
     {
         [SerializeField] private MeshFilter _meshFilter;
 
-        private IGridPlacementSystem _gridPlacementSystem = new EmptyGridPlacementSystem(); // needs provider
-        private IGridVisualizer _gridVisualizer = new EmptyGridVisualizer(); // maybe needs provider too?
+        private IGridPlacementSystem _gridPlacementSystem = new EmptyGridPlacementSystem();
+        private IGridVisualizer _gridVisualizer = new EmptyGridVisualizer(); 
         private IGridCreation _gridCreation = new EmptyGridCreation();
         public IGridPlacementSystem GridPlacementSystem => this._gridPlacementSystem;
         public IGridVisualizer GridVisualizer => this._gridVisualizer;

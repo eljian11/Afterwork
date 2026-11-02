@@ -1,3 +1,4 @@
+using Project.Scripts.Environment.Reworked.Room;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
