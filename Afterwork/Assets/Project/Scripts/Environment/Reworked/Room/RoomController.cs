@@ -1,10 +1,9 @@
-using Project.Scripts.Room.Reworked;
+using Project.Scripts.Environment.Reworked.Grid;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Project.Scripts.Environment.Reworked.Room
+namespace Project.Scripts.Environment.Reworked.Room 
 {
-    public class RoomController : MonoBehaviour
+    public sealed class RoomController : MonoBehaviour, IRoomController
     {
         [Header("References")] 
         [SerializeField] private GridManager gridManager;
@@ -13,10 +12,6 @@ namespace Project.Scripts.Environment.Reworked.Room
 
         private RoomItemData _activeRoomItemData;
         private bool _isPlacing = false;
-
-        [Header("Testing UI")] 
-        [SerializeField] private RoomItemData testRoomItemData;
-        [SerializeField] private Button _beginPlacementButton;
         
         private Camera _mainCamera;
 
@@ -25,21 +20,12 @@ namespace Project.Scripts.Environment.Reworked.Room
             this._mainCamera = Camera.main;
         }
 
-        private void OnEnable()
-        {
-            if (this._beginPlacementButton != null)
-                this._beginPlacementButton.onClick.AddListener(() => BeginPlacement(this.testRoomItemData));
-        }
-
-        private void OnDisable()
-        {
-            if (this._beginPlacementButton != null)
-                this._beginPlacementButton.onClick.RemoveListener(() => BeginPlacement(this.testRoomItemData));
-        }
-
         public void BeginPlacement(RoomItemData roomItemData)
         {
-            if (roomItemData == null) return;
+            if (roomItemData == null)
+            {
+                return;
+            }
 
             this._activeRoomItemData = roomItemData;
             this._isPlacing = true;
@@ -49,9 +35,15 @@ namespace Project.Scripts.Environment.Reworked.Room
 
         private void Update()
         {
-            if (!this._isPlacing) return;
+            if (!this._isPlacing)
+            {
+                return;
+            }
 
-            if (Input.GetKeyDown(KeyCode.R)) this.placementHandler.RotateItem();
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                this.placementHandler.RotateItem();
+            }
 
             var ray = this._mainCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -60,7 +52,6 @@ namespace Project.Scripts.Environment.Reworked.Room
                 Vector2Int currentSize = this.placementHandler.GetCurrentSize();
                 Quaternion rotation = this.placementHandler.GetCurrentRotation();
 
-                // Map mouse hit point to grid origin cell
                 Vector2Int originCell = this.gridManager.GridPlacementSystem.WorldToGridPosition(hit.point);
 
                 bool canPlace = this.gridManager.GridPlacementSystem.IsAreaAvailable(originCell, currentSize);
@@ -109,5 +100,10 @@ namespace Project.Scripts.Environment.Reworked.Room
             this.placementHandler.CleanupGhost();
             this.gridManager.IsEditMode(false);
         }
+    }
+
+    public interface IRoomController
+    {
+        void BeginPlacement(RoomItemData roomItemData);
     }
 }

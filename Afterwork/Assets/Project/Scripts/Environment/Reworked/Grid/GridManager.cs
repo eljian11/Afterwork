@@ -1,14 +1,14 @@
 using System.Collections.Generic;
-using Project.Scripts.Environment.Reworked.Grid;
+using Project.Scripts.Room.Reworked;
 using UnityEngine;
 
-namespace Project.Scripts.Room.Reworked
+namespace Project.Scripts.Environment.Reworked.Grid
 {
     public sealed class GridManager : MonoBehaviour
     {
         [SerializeField] private MeshFilter _meshFilter;
 
-        private IGridPlacementSystem _gridPlacementSystem = new EmptyGridPlacementSystem();
+        private IGridPlacementSystem _gridPlacementSystem = new EmptyGridPlacementSystem(); 
         private IGridVisualizer _gridVisualizer = new EmptyGridVisualizer(); 
         private IGridCreation _gridCreation = new EmptyGridCreation();
         public IGridPlacementSystem GridPlacementSystem => this._gridPlacementSystem;
