@@ -9,7 +9,7 @@ namespace Project.Scripts.Environment.Reworked.Grid
         private float _tileSize = 1f;
         private Dictionary<Vector2Int, CellData> _grid = new();
 
-        public void Initialize(Dictionary<Vector2Int, CellData> grid, float tileSize)
+        public void Initialize(ref Dictionary<Vector2Int, CellData> grid, float tileSize)
         {
             this._grid = grid;
             this._tileSize = tileSize;
@@ -38,7 +38,10 @@ namespace Project.Scripts.Environment.Reworked.Grid
             {
                 var targetCell = new Vector2Int(originCell.x + x, originCell.y + z);
 
-                if (!IsCellWithinBounds(targetCell) || !IsCellFree(targetCell)) return false;
+                if (!IsCellWithinBounds(targetCell) || !IsCellFree(targetCell))
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -46,7 +49,11 @@ namespace Project.Scripts.Environment.Reworked.Grid
 
         private bool IsCellFree(Vector2Int cellPos)
         {
-            if (this._grid.TryGetValue(cellPos, out var cell)) return !cell.IsOccupied;
+            if (this._grid.TryGetValue(cellPos, out var cell))
+            {
+                return !cell.IsOccupied;
+            }
+            
             return false;
         }
 

@@ -6,7 +6,7 @@ namespace Project.Scripts.Room.Reworked
 {
     public sealed class EmptyGridVisualizer : IGridVisualizer
     {
-        public void Initialize(Dictionary<Vector2Int, CellData> grid, float tileSize, MeshFilter meshFilter)
+        public void Initialize(ref Dictionary<Vector2Int, CellData> grid, float tileSize, MeshFilter meshFilter)
         {
         }
 

@@ -6,7 +6,7 @@ namespace Project.Scripts.Room.Reworked
 {
     public sealed class EmptyGridPlacementSystem : IGridPlacementSystem
     {
-        public void Initialize(Dictionary<Vector2Int, CellData> grid, float tileSize)
+        public void Initialize(ref Dictionary<Vector2Int, CellData> grid, float tileSize)
         {
         }
 

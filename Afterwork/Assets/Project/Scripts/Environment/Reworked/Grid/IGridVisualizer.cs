@@ -6,7 +6,7 @@ namespace Project.Scripts.Environment.Reworked.Grid
 {
     public interface IGridVisualizer
     {
-        void Initialize(Dictionary<Vector2Int, CellData> grid, float tileSize, MeshFilter meshFilter);
+        void Initialize(ref Dictionary<Vector2Int, CellData> grid, float tileSize, MeshFilter meshFilter);
         void SetVisibility(bool isVisible);
         void UpdateGrid();
     }

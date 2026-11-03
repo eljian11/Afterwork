@@ -10,7 +10,7 @@ namespace Project.Scripts.Environment.Reworked.Grid
         private Mesh _gridMesh;
         private Dictionary<Vector2Int, CellData> _currentGrid;
 
-        public void Initialize(Dictionary<Vector2Int, CellData> grid, float tileSize, MeshFilter meshFilter)
+        public void Initialize(ref Dictionary<Vector2Int, CellData> grid, float tileSize, MeshFilter meshFilter)
         {
             this._meshFilter = meshFilter;
 

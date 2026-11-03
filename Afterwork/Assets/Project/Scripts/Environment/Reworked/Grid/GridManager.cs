@@ -25,8 +25,8 @@ namespace Project.Scripts.Room.Reworked
 
             var grids = CreateGrid(gridSie);
 
-            this._gridPlacementSystem.Initialize(grids, tileSize);
-            this._gridVisualizer.Initialize(grids, tileSize, this._meshFilter);
+            this._gridPlacementSystem.Initialize(ref grids, tileSize);
+            this._gridVisualizer.Initialize(ref grids, tileSize, this._meshFilter);
         }
 
         private Dictionary<Vector2Int, CellData> CreateGrid(Vector2Int gridSize)
