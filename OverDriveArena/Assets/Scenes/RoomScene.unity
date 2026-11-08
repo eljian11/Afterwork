@@ -1029,7 +1029,6 @@ GameObject:
   - component: {fileID: 2080666442}
   - component: {fileID: 2080666441}
   - component: {fileID: 2080666443}
-  - component: {fileID: 2080666444}
   m_Layer: 0
   m_Name: RoomManager
   m_TagString: Untagged
@@ -1114,25 +1113,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e166fdb3bae6648a4b64965be1858a0e, type: 2}
   - {fileID: 11400000, guid: 1cb8eb83b40c74ac99547a40f0e83bf9, type: 2}
   - {fileID: 11400000, guid: 3b7cbdff4dff64afda365b29e5557234, type: 2}
---- !u!114 &2080666444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2080666438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78ade9a28ac44084af0b8406af057d06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Scripts.Environment.Reworked.Room.RoomGameLifeCycle
-  parentReference:
-    TypeName: 
-  autoRun: 0
-  autoInjectGameObjects:
-  - {fileID: 2052336358}
-  _roomController: {fileID: 2080666442}
-  _itemListControllerTest: {fileID: 2052336362}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
